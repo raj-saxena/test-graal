@@ -1,0 +1,26 @@
+spring:
+  config:
+    import: vault://
+  profiles:
+    active: dev
+  application:
+    name: api-gateway
+  cloud:
+    vault:
+      authentication: APPROLE
+      fail-fast: false
+      host: vault.runmoss.run
+      kv:
+        enabled: true
+        backend: secret
+        application-name: ${spring.application.name}
+        default-context: ${spring.application.name}
+        profiles: ''
+      app-role:
+        role-id: ${VAULT_ROLE_ID}
+        secret-id: ${VAULT_SECRET_ID}
+      generic:
+        enabled: false
+
+twilio:
+  username: ${ENV_TWILIO_USERNAME}
